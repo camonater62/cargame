@@ -54,18 +54,20 @@ export function Car({ thirdPerson }) {
         let quaternion = new Quaternion(0,0,0,0);
         quaternion.setFromRotationMatrix(chassisBody.current.matrixWorld);
 
-        let wDir = new Vector3(0, 0, -1);
+        let wDir = new Vector3(0, 0, 1);
         wDir.applyQuaternion(quaternion);
         wDir.normalize();
 
+        let cameraTarget = position.clone().add(wDir.clone().multiplyScalar(-10));
+
         let cameraPosition = position.clone().add(
-            wDir.clone().multiplyScalar(-1).add(
-                new Vector3(0, 0.3, 0)
+            wDir.clone().multiplyScalar(-0.1).add(
+                new Vector3(0, 0.05, 0)
             )
         );
 
         state.camera.position.copy(cameraPosition);
-        state.camera.lookAt(position);
+        state.camera.lookAt(cameraTarget);
     });
 
     useEffect(() => {
